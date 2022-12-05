@@ -2,6 +2,9 @@ import streamlit as st
 from PIL import Image
 import re 
 import color_generator as c 
+import joblib as jb
+import cohere
+
 personality = {
     'ISTJ' : 'The Inspector- reserved and practical, they tend to be loyal, orderly, and traditional.', 
     'ISTP' : 'The Crafter- highly independent, they enjoy new experiences that provide first-hand learning.', 
@@ -20,6 +23,8 @@ personality = {
     'ENTP' : 'The Debater- Highly inventive, they love being surrounded by ideas and tend to start many projects (but may struggle to finish them).',
     'ENTJ' : 'The Commander- Outspoken and confident, they are great at making plans and organizing projects.'
 }
+personality_list=['ISTJ', 'ISTP', 'ISFJ','ISFP','INFJ','INFP','INTJ','INTP','ESTP','ESTJ','ESFP','ESFJ','ENFP','ENFJ', 
+    'ENTP','ENTJ' ]
 
 st.set_page_config(page_title="Sweater Personality",
                    page_icon="🎄")
@@ -46,8 +51,8 @@ def personalityType(input):
         st.write(input)
         st.success("You are about to find your personality")
         expander = st.expander("Click here")
-        model_result_type = "" #change this 
-        expander.write(personality['INFJ']) #change to model_result_type 
+        model_result= personality_list[model_result_type(input)] #change this 
+        expander.write(personality[model_result]) #change to model_result_type 
 
 def generateSweater(): 
     if st.button("Generate My Sweater"): 
@@ -55,15 +60,25 @@ def generateSweater():
         st.image(img_file) 
         st.snow()
 
-def model_result_type():
-    pass
+def model_result_type(input):
+    # ADD YOUR API KEY HERE
+    api_key = "7mHjN9V4dW4djta6LdGoXFXlpMwScsIuPdYK6URf"
+
+    # Create and retrieve a Cohere API key from os.cohere.ai
+    co = cohere.Client(api_key)
+    filename = "Completed_model.joblib"
+    loaded_model = jb.load(filename)
+    response = co.embed(input)
+    type = loaded_model.predict(response.embeddings)
+    return type
+    
 
 def main(): 
     questions()
     input = body()
     personalityType(input)
     generateSweater()
-    model_result_type()
+    model_result_type(input)
 
 if __name__ == "__main__":
   main()

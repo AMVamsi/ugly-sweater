@@ -6,11 +6,14 @@ import openai
 import main as m 
 #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 - testKey
 #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 - mainKey
+# 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 - newKey
 
-openai.api_key = "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"
+openai.api_key = "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"
 openai.Model.list()
 
-inputPersonalityType = m.model_result_type()
+input_text = m.body()
+
+inputPersonalityType = m.model_result_type(input_text)
 
 df = pd.read_csv("PersonalityColorHex.csv")
 listPersonalities = []
