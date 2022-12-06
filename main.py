@@ -1,7 +1,7 @@
 import streamlit as st 
 
-st.set_page_config(page_title="Sweater Personality",
-                   page_icon="🎄")
+# st.set_page_config(page_title="Sweater Personality",
+#                    page_icon="🎄")
 
 from PIL import Image
 import re 
