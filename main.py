@@ -71,7 +71,7 @@ def model_result_type(input):
 
         # Create and retrieve a Cohere API key from os.cohere.ai
         co = cohere.Client(api_key)
-        filename = "Completed_model.joblib"
+        filename = "trained_model.pkl"
         loaded_model = joblib.load(filename)
         response = co.embed(input.split())
 
