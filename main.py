@@ -1,4 +1,8 @@
 import streamlit as st 
+
+st.set_page_config(page_title="Sweater Personality",
+                   page_icon="🎄")
+
 from PIL import Image
 import re 
 import color_generator as c 
@@ -8,8 +12,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-st.set_page_config(page_title="Sweater Personality",
-                   page_icon="🎄")
+
 st.markdown('<h1 style="color:rgb(255,75,75);">Huggszzy</h1>', unsafe_allow_html=True)
 header = Image.open("images/header.png")
 image = st.image(header)
