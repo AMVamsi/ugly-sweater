@@ -2,8 +2,17 @@ import streamlit as st
 from PIL import Image
 import re 
 import color_generator as c 
-import joblib as jb
+import joblib
 import cohere
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+st.set_page_config(page_title="Sweater Personality",
+                   page_icon="🎄")
+st.markdown('<h1 style="color:rgb(255,75,75);">Huggszzy</h1>', unsafe_allow_html=True)
+header = Image.open("images/header.png")
+image = st.image(header)
 
 personality = {
     'ISTJ' : 'The Inspector- reserved and practical, they tend to be loyal, orderly, and traditional.', 
@@ -26,11 +35,6 @@ personality = {
 personality_list=['ISTJ', 'ISTP', 'ISFJ','ISFP','INFJ','INFP','INTJ','INTP','ESTP','ESTJ','ESFP','ESFJ','ENFP','ENFJ', 
     'ENTP','ENTJ' ]
 
-st.set_page_config(page_title="Sweater Personality",
-                   page_icon="🎄")
-st.markdown('<h1 style="color:rgb(255,75,75);">Huggszzy</h1>', unsafe_allow_html=True)
-header = Image.open("images/header.png")
-image = st.image(header)
 
 def questions(): 
     st.subheader("Create Your Christmas Sweater")
@@ -51,26 +55,31 @@ def personalityType(input):
         st.write(input)
         st.success("You are about to find your personality")
         expander = st.expander("Click here")
-        model_result= personality_list[model_result_type(input)] #change this 
+        model_result= model_result_type(input) #change this 
         expander.write(personality[model_result]) #change to model_result_type 
 
 def generateSweater(): 
     if st.button("Generate My Sweater"): 
-        img_file = "https://oaidalleapiprodscus.blob.core.windows.net/private/org-oEWvZa5qHHviMa2ac3EVFclF/user-cNFvk4UTWEilNBYeXNMgPukP/img-as7m9Xm0Pu93ztwQ8lx84l3g.png?st=2022-12-04T17%3A13%3A19Z&se=2022-12-04T19%3A13%3A19Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-04T12%3A05%3A13Z&ske=2022-12-05T12%3A05%3A13Z&sks=b&skv=2021-08-06&sig=4LRaQTt%2BocOE8RvtWkky6imrP%2BrgrGliMXItI0B3O78%3D"
+        img_file = c.urls[0]
         st.image(img_file) 
         st.snow()
 
 def model_result_type(input):
-    # ADD YOUR API KEY HERE
-    api_key = "7mHjN9V4dW4djta6LdGoXFXlpMwScsIuPdYK6URf"
+    if(input):
+        
+        api_key = os.environ.get('cohere_api')
 
-    # Create and retrieve a Cohere API key from os.cohere.ai
-    co = cohere.Client(api_key)
-    filename = "Completed_model.joblib"
-    loaded_model = jb.load(filename)
-    response = co.embed(input)
-    type = loaded_model.predict(response.embeddings)
-    return type
+        # Create and retrieve a Cohere API key from os.cohere.ai
+        co = cohere.Client(api_key)
+        filename = "Completed_model.joblib"
+        loaded_model = joblib.load(filename)
+        response = co.embed(input.split())
+
+        type = loaded_model.predict(response.embeddings)
+
+        return personality_list[type[0]]
+    else:
+        return ""
     
 
 def main(): 
@@ -78,7 +87,6 @@ def main():
     input = body()
     personalityType(input)
     generateSweater()
-    model_result_type(input)
 
 if __name__ == "__main__":
   main()
