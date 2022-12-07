@@ -45,9 +45,11 @@ def questions():
     st.markdown("<b>How would you describe yourself?</b>",
               unsafe_allow_html=True)
 
-def body():
-    
-    input = st.text_input("Enter or paste any text that best describes you")
+
+def body(uID):
+    input = st.text_input("Enter or paste any text that best describes you",
+                        key=uID)
+
     #Check if input is a string 
     if isinstance(input, str): 
         if  re.findall(r'(https?://\S+)',input): 
@@ -88,7 +90,7 @@ def model_result_type(input):
 
 def main(): 
     questions()
-    input = body()
+    input = body("textU1")
     personalityType(input)
     generateSweater()
 
