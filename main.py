@@ -63,7 +63,7 @@ def personalityType(input):
 
 def generateSweater(): 
     if st.button("Generate My Sweater"): 
-        img_file = c.urls[0]
+        img_file = c.urls[random.choice([0,1])]
         st.image(img_file) 
         st.snow()
 
@@ -80,7 +80,7 @@ def model_result_type(input):
 
         type = loaded_model.predict(response.embeddings)
 
-        return personality_list[type[random.choice([0,1])]]
+        return personality_list[type[0]]
     else:
         return ""
     
