@@ -80,7 +80,7 @@ def model_result_type(input):
 
         type = loaded_model.predict(response.embeddings)
 
-        return personality_list[type[0]]
+        return personality_list[type[random.choice([0,1])]]
     else:
         return ""
     
