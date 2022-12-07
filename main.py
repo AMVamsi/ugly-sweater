@@ -9,6 +9,7 @@ import color_generator as c
 import joblib
 import cohere
 import os
+import random
 
 from dotenv import load_dotenv
 load_dotenv()
