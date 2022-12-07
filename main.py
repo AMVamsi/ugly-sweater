@@ -47,7 +47,7 @@ def questions():
 
 def body():
     
-    input = st.text_input("Enter or paste any text that best describes you")
+    input = st.text_input("Enter or paste any text that best describes you", key="placeholder")
     #Check if input is a string 
     if isinstance(input, str): 
         if  re.findall(r'(https?://\S+)',input): 
