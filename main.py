@@ -9,7 +9,6 @@ import color_generator as c
 import joblib
 import cohere
 import os
-import random
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -47,10 +46,8 @@ def questions():
               unsafe_allow_html=True)
 
 def body():
-    res = random.seed(3)
     
-    input = st.text_input("Enter or paste any text that best describes you",
-                        key="input" + str(res))
+    input = st.text_input("Enter or paste any text that best describes you")
     #Check if input is a string 
     if isinstance(input, str): 
         if  re.findall(r'(https?://\S+)',input): 
