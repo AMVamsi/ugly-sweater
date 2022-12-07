@@ -9,6 +9,8 @@ import color_generator as c
 import joblib
 import cohere
 import os
+import secrets
+import string
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -45,8 +47,11 @@ def questions():
               unsafe_allow_html=True)
 
 def body():
+    res = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
+              for i in range(7))
+    
     input = st.text_input("Enter or paste any text that best describes you",
-                        key="input")
+                        key="input" + str(res))
     #Check if input is a string 
     if isinstance(input, str): 
         if  re.findall(r'(https?://\S+)',input): 
