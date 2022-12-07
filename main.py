@@ -9,6 +9,7 @@ import color_generator as c
 import joblib
 import cohere
 import os
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -44,9 +45,11 @@ def questions():
     st.markdown("<b>How would you describe yourself?</b>",
               unsafe_allow_html=True)
 
+
 def body(uID):
     input = st.text_input("Enter or paste any text that best describes you",
                         key=uID)
+
     #Check if input is a string 
     if isinstance(input, str): 
         if  re.findall(r'(https?://\S+)',input): 
@@ -63,7 +66,7 @@ def personalityType(input):
 
 def generateSweater(): 
     if st.button("Generate My Sweater"): 
-        img_file = c.urls[0]
+        img_file = c.urls[random.choice([0,1])]
         st.image(img_file) 
         st.snow()
 
