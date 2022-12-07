@@ -47,7 +47,7 @@ def questions():
               unsafe_allow_html=True)
 
 def body():
-    res = random.seed(3)*1000
+    res = random.seed(3)
     
     input = st.text_input("Enter or paste any text that best describes you",
                         key="input" + str(res))
