@@ -8,7 +8,7 @@ import main as m
 openai.api_key = os.environ.get('openai_api')
 openai.Model.list()
 
-input_text = m.body("inputU2")
+input_text = m.input_item
 
 inputPersonalityType = m.model_result_type(input_text)
 

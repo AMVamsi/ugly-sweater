@@ -15,9 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-st.markdown('<h1 style="color:rgb(255,75,75);">Huggszzy</h1>', unsafe_allow_html=True)
-header = Image.open("images/header.png")
-image = st.image(header)
+
 
 personality = {
     'ISTJ' : 'The Inspector- reserved and practical, they tend to be loyal, orderly, and traditional.', 
@@ -40,14 +38,20 @@ personality = {
 personality_list=['ISTJ', 'ISTP', 'ISFJ','ISFP','INFJ','INFP','INTJ','INTP','ESTP','ESTJ','ESFP','ESFJ','ENFP','ENFJ', 
     'ENTP','ENTJ' ]
 
+input_item = ""
+
 
 def questions(): 
+    st.markdown('<h1 style="color:rgb(255,75,75);">Huggszzy</h1>', unsafe_allow_html=True)
+    header = Image.open("images/header.png")
+    image = st.image(header)
     st.subheader("Create Your Christmas Sweater")
     st.markdown("<b>How would you describe yourself?</b>",
               unsafe_allow_html=True)
 
 
 def body(uID):
+    
     input = st.text_input("Enter or paste any text that best describes you",
                         key=uID)
 
@@ -55,6 +59,7 @@ def body(uID):
     if isinstance(input, str): 
         if  re.findall(r'(https?://\S+)',input): 
           st.warning("Please enter text only!")
+    input_item=input
     return input
         
 def personalityType(input): 
